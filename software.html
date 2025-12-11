@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Irodx — Innovative Software Solutions</title>
+  <link rel="icon" href="image_29665.png" type="image/png" />
+  
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  
+  <!-- AOS Library -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #7e22ce;
+      --accent: #0ea5e9;
+      --success: #10b981;
+      --success-dark: #059669;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --text-dark: #334155;
+      --text-light: #64748b;
+      --card-bg: #ffffff;
+      --border-radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      /* Add padding to account for fixed navbar */
+      padding-top: 70px; /* Height of navbar + some extra space */
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header & Navigation - From First Document */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background-color: white;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      /* Ensure navbar height is consistent */
+      min-height: 70px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-image {
+      height: 40px;
+      margin-right: 15px;
+      border-radius: 5px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      font-size: 24px;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin-left: 25px;
+    }
+
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #00CFFF;
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #00CFFF;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 1001; /* Ensure hamburger is clickable above nav-links */
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      margin: 3px 0;
+      transition: 0.3s;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      padding: 120px 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%232563eb" opacity="0.05"/><path d="M20,20 L180,180 M20,180 L180,20" stroke="%232563eb" stroke-width="0.5" stroke-opacity="0.1"/></svg>');
+      background-size: cover;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Main Content */
+    main {
+      padding: 5rem 0;
+    }
+
+    .section {
+      margin-bottom: 6rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* Software Cards */
+    .software-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .software-card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .software-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-header {
+      padding: 1.5rem 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .app-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .app-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .card-body p {
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-footer {
+      padding: 0 1.5rem 1.5rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.9rem 1.8rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, var(--primary), var(--primary-dark));
+      color: white;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+    }
+    
+    /* APK Download Button */
+    .btn-apk {
+      background: linear-gradient(to right, var(--success), var(--success-dark));
+      color: white;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+    }
+    
+    .btn-apk:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.5);
+      background: linear-gradient(to right, var(--success-dark), #047857);
+    }
+
+    .card-buttons {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    
+    .card-buttons .btn {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    /* Features Section */
+    .features {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 4rem;
+      box-shadow: var(--shadow);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .feature {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 16px;
+      transition: var(--transition);
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      background: rgba(37, 99, 235, 0.05);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(30, 64, 175, 0.1));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      color: var(--primary);
+    }
+
+    .feature h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .stat {
+      padding: 2rem;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* Footer - From First Document */
+    footer {
+      background-color: #1f2937;
+      color: white;
+      padding: 60px 0 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea 0%, #00CFFF 100%);
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-section {
+      width: 100%;
+    }
+
+    .footer-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #00CFFF;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: #00CFFF;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .footer-logo .logo-icon {
+      font-size: 28px;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .footer-logo .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .footer-description {
+      line-height: 1.8;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background: #00CFFF;
+      transform: translateY(-3px);
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: inline-block;
+      position: relative;
+    }
+
+    .footer-links a::before {
+      content: '→';
+      position: absolute;
+      left: -15px;
+      opacity: 0;
+      transition: all 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: #00CFFF;
+      padding-left: 15px;
+    }
+
+    .footer-links a:hover::before {
+      opacity: 1;
+      left: 0;
+    }
+
+    .contact-info {
+      list-style: none;
+    }
+
+    .contact-info li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .contact-info i {
+      color: #00CFFF;
+      margin-right: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+
+    .contact-info span {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .newsletter-form {
+      display: flex;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 4px 0 0 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 14px;
+      min-width: 200px;
+    }
+
+    .newsletter-input::placeholder {
+      color: #aaa;
+    }
+
+    .newsletter-button {
+      padding: 12px 20px;
+      background: #00CFFF;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .newsletter-button:hover {
+      background: #00a8cc;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .copyright {
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-bottom-links a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .footer-bottom-links a:hover {
+      color: #00CFFF;
+    }
+
+    /* Download Banner */
+    .download-banner {
+      background: linear-gradient(90deg, var(--success), var(--success-dark));
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-weight: 600;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.4s ease-out;
+    }
+    
+    .download-banner.show {
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      /* Adjust body padding for mobile */
+      body {
+        padding-top: 60px; /* Reduced padding for smaller navbar on mobile */
+      }
+      
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px; /* Match navbar height */
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links li {
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .features {
+        padding: 2rem;
+      }
+      
+      .navbar {
+        flex-direction: row; /* Keep row direction for mobile */
+        padding: 10px 20px; /* Adjust padding */
+        height: auto; /* Allow height to adjust */
+        min-height: 60px; /* Minimum height */
+      }
+      
+      .nav-links {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .card-buttons {
+        flex-direction: column;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .footer-bottom-links {
+        justify-content: center;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-section {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Further adjust body padding for very small screens */
+      body {
+        padding-top: 50px;
+      }
+      
+      .hero {
+        padding: 5rem 1rem 3rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .card-buttons .btn {
+        width: 100%;
+      }
+      
+      .card-buttons {
+        gap: 0.5rem;
+      }
+      
+      .navbar {
+        padding: 8px 15px;
+        min-height: 50px;
+      }
+      
+      .nav-links {
+        top: 50px; /* Match navbar height */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header - From First Document -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="image_29665.png" alt="Irodx Logo" class="logo-image">
+      <a href="index.html" class="logo">
+         <div class="logo-text"><span style="color: #000000;">Iro</span><span style="color: #00CFFF;">dx</span></div>
+      </a>
+    </div>
+    <div class="hamburger" aria-label="Toggle Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content" data-aos="fade-up">
+        <h1>Innovative Software Solutions</h1>
+          <div class="section-buttons">
+          <a href="#software" class="btn btn-primary">
+            <i class="fas fa-download"></i> Download Our Apps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Software Section -->
+    <section id="software" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <h2>Our Software Solutions</h2>
+        <p>Discover our suite of powerful tools designed to streamline your business operations</p>
+      </div>
+
+      <div class="software-grid">
+        <!-- Calculator App -->
+        <div class="software-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-header">
+            <div class="app-icon">
+              <img src="Calculator Logo.png" alt="Calculator">
+            </div>
+            <h3 class="card-title">Calculator</h3>
+          </div>
+          <div class="card-body">
+            <p>Calculator Application.</p>
+          </div>
+          <div class="card-footer">
+            <div class="card-buttons">
+              <a href="calculator.html" class="btn btn-primary">
+                <i class="fas fa-eye"></i> Explore
+              </a>
+              <a href="https://drive.google.com/file/d/1BLGFvHXzRjl-J_ORxSx5N3Pu9ZVhkOXV/view?usp=drive_link" download="Calculator_v1.1.0.apk" class="btn btn-apk">
+                <i class="fas fa-download"></i> Download APK
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NowTerra -->
+        <div class="software-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-header">
+            <div class="app-icon">
+              <img src="NowTerra.png" alt="NowTerra">
+            </div>
+            <h3 class="card-title">NowTerra</h3>
+          </div>
+          <div class="card-body">
+            <p>NowTerra is a smart Android app providing weather info for 10,000+ cities Min/Max Temp, Humidity, Wind Speed, Local Time, Date, and Time Zone. Get real time updates with an easy to use interface.</p>
+          </div>
+          <div class="card-footer">
+            <div class="card-buttons">
+              <a href="nowterra.html" class="btn btn-primary">
+                <i class="fas fa-eye"></i> Explore
+              </a>
+              <a href="https://drive.google.com/file/d/1pNqD3x_BwA5WPIguKs8w8EypM1MJKyYw/view?usp=drive_link" download="NowTerra_v1.1.1.apk" class="btn btn-apk">
+                <i class="fas fa-download"></i> Download APK
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tblood -->
+        <div class="software-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-header">
+            <div class="app-icon">
+              <img src="3473536_647.png" alt="Tblood">
+            </div>
+            <h3 class="card-title">Tblood</h3>
+          </div>
+          <div class="card-body">
+            <p>Blood Support Community.</p>
+          </div>
+          <div class="card-footer">
+            <div class="card-buttons">
+              <a href="https://tbloods.online/" class="btn btn-primary">
+                <i class="fas fa-eye"></i> Explore
+              </a>
+              <a href="https://drive.google.com/file/d/1fZYkEX3iuWMvIeVWt0mhGn3zT9OIR-8E/view?usp=drive_link" download="Tblood_v1.1.0.apk" class="btn btn-apk">
+                <i class="fas fa-download"></i> Download APK
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coming Soon -->
+        <div class="software-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-header">
+            <div class="app-icon">
+              <img src="comingsoon1.png" alt="Coming Soon">
+            </div>
+            <h3 class="card-title">Coming Soon</h3>
+          </div>
+          <div class="card-body">
+            <p></p>
+          </div>
+          <div class="card-footer">
+            <div class="card-buttons">
+              <a href="#" class="btn btn-primary">
+                <i class="fas fa-eye"></i> Explore
+              </a>
+              <a href="#.apk" download="#.apk" class="btn btn-apk">
+                <i class="fas fa-download"></i> Download APK
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+  <!-- Footer - From First Document -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <!-- About Section -->
+        <div class="footer-section">
+          <div class="footer-logo">
+             <div class="logo-text">
+                     <span style="color: #ffffff;">Iro</span><span style="color: #00CFFF;">dx</span>
+             </div>
+          </div>
+          <p class="footer-description">
+            Innovation that empowers and drives you forward.</p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/irodxPlatforms" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links Section -->
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="support.html">Support</a></li>
+            <li><a href="report.html">Report</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact & Newsletter Section -->
+        <div class="footer-section">
+          <h3>Mail</h3>
+          <ul class="contact-info">
+            <li>
+            <li>
+              <i class="fas fa-envelope"></i>
+              <span>hello@aitinc.site</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="copyright">
+          &copy; 2025 <span style="color: #ffffff;">Iro</span><span style="color: #00CFFF;">dx</span>. All rights reserved.
+        </div>
+        <div class="footer-bottom-links">
+          <a href="Privacy-Policy.html">Privacy Policy</a>
+          <a href="Terms-of-Service.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AOS Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      disable: 'mobile'
+    });
+
+    // Mobile menu toggle - From First Document
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on a nav link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        // Close the menu
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+        
+        // Smooth scroll to section if it's an anchor link
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+            const targetPosition = target.offsetTop - navbarHeight - 20; // Extra padding
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
+
+    // Download notification
+    const downloadBanner = document.createElement('div');
+    downloadBanner.id = 'downloadBanner';
+    downloadBanner.className = 'download-banner';
+    downloadBanner.innerHTML = '<span id="downloadMessage">Download starting...</span>';
+    document.body.appendChild(downloadBanner);
+    
+    // Function to show download notification
+    function showDownloadNotification(appName) {
+      const downloadMessage = document.getElementById('downloadMessage');
+      downloadMessage.textContent = `Downloading ${appName}... Your file will be available shortly.`;
+      downloadBanner.classList.add('show');
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        downloadBanner.classList.remove('show');
+      }, 5000);
+    }
+    
+    // Set up APK download links
+    document.querySelectorAll('.btn-apk').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const appName = this.closest('.software-card').querySelector('.card-title').textContent;
+        showDownloadNotification(appName);
+        
+        // In a real implementation, download would start automatically via the download attribute
+        // This is just to simulate the process
+        console.log(`Starting download for ${appName}...`);
+      });
+    });
+  </script>
+</body>
+</html>

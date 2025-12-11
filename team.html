@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Irodx | Team</title>
+  <link rel="icon" href="image_29665.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e40af',      // AIT Blue
+            primaryDark: '#1e3a8a',
+            secondary: '#2563eb',
+            accent: '#00CFFF',
+            lightGray: '#f8fafc'
+          },
+          fontFamily: {
+            'inter': ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .social-icon {
+      transition: all 0.3s ease;
+    }
+    .social-icon:hover {
+      transform: translateY(-3px) scale(1.1);
+    }
+    .member-card {
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .member-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #1e40af, #00CFFF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .stat-card {
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    .footer-link {
+      transition: all 0.2s ease;
+    }
+    .footer-link:hover {
+      color: #00CFFF;
+      padding-left: 5px;
+    }
+    .wave {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%231e3a8a' fill-opacity='1' d='M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,90.7C672,85,768,107,864,128C960,149,1056,171,1152,165.3C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+      background-size: cover;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-inter">
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="flex items-center">
+      <img src="image_29665.png" alt="Irodx Logo" class="h-10">
+      <span class="ml-3 font-bold text-xl"><span class="text-primary">Iro</span><span class="text-accent">dx</span></span>
+    </a>
+    <div class="hidden md:flex space-x-6">
+      <a href="index.html" class="text-gray-700 hover:text-primary transition">Home</a>
+      <a href="about.html" class="text-gray-700 hover:text-primary transition">About</a>
+      <a href="team.html" class="text-primary font-semibold">Team</a>
+      <a href="contact.html" class="text-gray-700 hover:text-primary transition">Contact</a>
+      <a href="gallery.html" class="text-gray-700 hover:text-primary transition">Gallery</a>
+      <a href="support.html" class="text-gray-700 hover:text-primary transition">Support</a>
+    </div>
+    <button id="menuBtn" class="md:hidden text-primary">
+      <i class="fas fa-bars text-2xl"></i>
+    </button>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden bg-white py-4 border-t">
+    <div class="container mx-auto flex flex-col space-y-3 px-4">
+      <a href="index.html" class="text-gray-700 hover:text-primary transition">Home</a>
+      <a href="about.html" class="text-gray-700 hover:text-primary transition">About</a>
+      <a href="team.html" class="text-primary font-semibold">Team</a>
+      <a href="contact.html" class="text-gray-700 hover:text-primary transition">Contact</a>
+      <a href="gallery.html" class="text-gray-700 hover:text-primary transition">Gallery</a>
+      <a href="support.html" class="text-gray-700 hover:text-primary transition">Support</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="pt-28 pb-16 bg-gradient-to-br from-primary to-secondary text-white relative overflow-hidden">
+  <div class="absolute inset-0 bg-black opacity-10"></div>
+  <div class="container mx-auto px-4 relative z-10">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-fade-in">Our People, Our Power</h1>
+    <p class="text-lg max-w-2xl mx-auto animate-fade-in opacity-90">Meet the talented individuals who drive innovation and excellence at Irodx. Our diverse team brings together expertise from various fields to create solutions that empower and drive you forward.</p>
+  </div>
+  <div class="wave"></div>
+</section>
+
+<!-- Company Stats Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="stat-card text-center p-6 rounded-lg border border-gray-100">
+        <div class="text-4xl font-bold gradient-text mb-2">2+</div>
+        <p class="text-gray-600">Team Members</p>
+      </div>
+      <div class="stat-card text-center p-6 rounded-lg border border-gray-100">
+        <div class="text-4xl font-bold gradient-text mb-2">15+</div>
+        <p class="text-gray-600">Projects</p>
+      </div>
+      <div class="stat-card text-center p-6 rounded-lg border border-gray-100">
+        <div class="text-4xl font-bold gradient-text mb-2">1+</div>
+        <p class="text-gray-600">Years Experience</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Spacer for better positioning -->
+<div class="h-12"></div>
+
+
+<!-- Leadership Team Section -->
+<section class="py-16 bg-lightGray">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">Leadership Team</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Our leadership team brings decades of combined experience in technology, business, and innovation.</p>
+    </div>
+    <center>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="member-card bg-white rounded-xl overflow-hidden">
+          <div class="flex justify-center p-6">
+            <img src="Toha.png" 
+                 alt="CTO" class="w-40 h-40 rounded-full object-cover border-4 border-primary">
+          </div>
+          <div class="text-center px-6 pb-6">
+            <h3 class="text-2xl font-bold text-gray-800">ABRAR ISHRAQ TOHA</h3>
+            <p class="text-primary font-semibold">Founder & CEO</p>
+            <p class="text-gray-600 mt-3">Driving innovation with vision and strategy at Irodx, backed by over a year of technology leadership experience.</p>
+          </div>
+        <div class="flex justify-center pb-6 space-x-4">
+          <a href="https://www.facebook.com/pmabrarishraqtoha" class="social-icon text-blue-600 hover:text-blue-800">
+            <i class="fab fa-facebook text-2xl"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/pm-toha06" class="social-icon text-blue-600 hover:text-blue-800">
+            <i class="fab fa-linkedin text-2xl"></i>
+          </a>
+          <a href="mailto:pmtoha05@protonmail.com" class="social-icon text-red-500 hover:text-red-700">
+            <i class="fas fa-envelope text-2xl"></i>
+          </a>
+          <a href="https://github.com/pmtoha" class="social-icon text-gray-700 hover:text-gray-900">
+            <i class="fab fa-github text-2xl"></i>
+          </a>
+          <a href="https://pmtoha.site/" class="social-icon text-pink-500 hover:text-pink-700">
+            <i class="fab fa-dribbble text-xl"></i>
+          </a>
+        </div>
+        </div>
+      </div>
+    </center>
+  </div>
+</section>
+
+
+
+<!-- Spacer for better positioning -->
+<div class="h-12"></div>
+
+
+
+<!-- Team Members Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">Our Team</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">Meet the talented individuals who make Irodx a leader in innovation and technology solutions.</p>
+    </div>
+    <center>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Team Member 4 -->
+        <div class="member-card bg-white rounded-xl overflow-hidden border border-gray-100">
+          <div class="flex justify-center p-6">
+            <img src="emptyimage.jpg" 
+                 alt="Developer" class="w-32 h-32 rounded-full object-cover border-4 border-accent">
+          </div>
+          <div class="text-center px-6 pb-6">
+            <h3 class="text-xl font-bold text-gray-800">EMPTY</h3>
+            <p class="text-accent font-semibold">Lead Developer</p>
+            <p class="text-gray-600 mt-2 text-sm">...</p>
+          </div>
+          <div class="flex justify-center pb-6 space-x-3">
+            <a href="#" class="social-icon text-blue-600 hover:text-blue-800">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="mailto:" class="social-icon text-red-500 hover:text-red-700">
+              <i class="fas fa-envelope text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Team Member 5 -->
+        <div class="member-card bg-white rounded-xl overflow-hidden border border-gray-100">
+          <div class="flex justify-center p-6">
+            <img src="emptyimage.jpg" 
+                 alt="Designer" class="w-32 h-32 rounded-full object-cover border-4 border-accent">
+          </div>
+          <div class="text-center px-6 pb-6">
+            <h3 class="text-xl font-bold text-gray-800">EMPTY</h3>
+            <p class="text-accent font-semibold">UX/UI Designer</p>
+            <p class="text-gray-600 mt-2 text-sm">...</p>
+          </div>
+          <div class="flex justify-center pb-6 space-x-3">
+            <a href="#" class="social-icon text-blue-600 hover:text-blue-800">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="mailto:" class="social-icon text-red-500 hover:text-red-700">
+              <i class="fas fa-envelope text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Team Member 6 -->
+        <div class="member-card bg-white rounded-xl overflow-hidden border border-gray-100">
+          <div class="flex justify-center p-6">
+            <img src="emptyimage.jpg" 
+                 alt="Project Manager" class="w-32 h-32 rounded-full object-cover border-4 border-accent">
+          </div>
+          <div class="text-center px-6 pb-6">
+            <h3 class="text-xl font-bold text-gray-800">EMPTY</h3>
+            <p class="text-accent font-semibold">Project Manager</p>
+            <p class="text-gray-600 mt-2 text-sm">...</p>
+          </div>
+          <div class="flex justify-center pb-6 space-x-3">
+            <a href="#" class="social-icon text-blue-600 hover:text-blue-800">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="mailto:" class="social-icon text-red-500 hover:text-red-700">
+              <i class="fas fa-envelope text-xl"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </center>
+  </div>
+</section>
+
+<!-- Join Our Team Section -->
+<section class="py-16 bg-gradient-to-r from-primary to-secondary text-white">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold mb-4">Join Our Team</h2>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-primaryDark text-white pt-16 pb-8 relative">
+  <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-accent to-primary"></div>
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <!-- Company Info -->
+      <div class="md:col-span-1">
+        <div class="flex items-center mb-4">
+          <img src="image_29665.png" alt="Irodx Logo" class="h-10">
+          <span class="ml-3 text-xl font-bold"><span class="text-white">Iro</span><span class="text-accent">dx</span></span>
+        </div>
+        <p class="text-gray-300 mb-4">Innovation that empowers and drives you forward.</p>
+        <div class="flex space-x-3">
+          <a href="https://www.facebook.com/irodxPlatforms" class="text-gray-300 hover:text-accent transition">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+        </div>
+      </div>
+      <!-- Quick Links -->
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-semibold mb-4 text-accent">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="index.html" class="footer-link text-gray-300 hover:text-accent">Home</a></li>
+          <li><a href="about.html" class="footer-link text-gray-300 hover:text-accent">About Us</a></li>
+          <li><a href="team.html" class="footer-link text-gray-300 hover:text-accent">Our Team</a></li>
+          <li><a href="gallery.html" class="footer-link text-gray-300 hover:text-accent">Gallery</a></li>
+          <li><a href="support.html" class="footer-link text-gray-300 hover:text-accent">Support</a></li>
+        </ul>
+      </div>
+      <!-- Contact Info -->
+      <div class="md:col-span-1">
+        <h3 class="text-lg font-semibold mb-4 text-accent">Contact Info</h3>
+        <ul class="space-y-3">
+          <li class="flex items-center">
+            <i class="fas fa-envelope mr-3 text-accent"></i>
+            <span class="text-gray-300">hello@aitinc.site</span>
+          </li>
+        </ul>
+      </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-300 mb-4 md:mb-0">&copy; 2025 <span class="text-white">Iro</span><span class="text-accent">dx</span>. All rights reserved.</p>
+      <div class="flex space-x-6">
+        <a href="Privacy-Policy.html" class="text-gray-300 hover:text-accent transition">Privacy Policy</a>
+        <a href="Terms-of-Service.html" class="text-gray-300 hover:text-accent transition">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    const icon = menuBtn.querySelector('i');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+  });
+  document.addEventListener('click', (e) => {
+    if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
+      mobileMenu.classList.add('hidden');
+      const icon = menuBtn.querySelector('i');
+      icon.classList.remove('fa-times');
+      icon.classList.add('fa-bars');
+    }
+  });
+</script>
+
+</body>
+</html>

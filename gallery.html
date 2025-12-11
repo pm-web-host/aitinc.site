@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Gallery - Irodx</title>
+    <link rel="icon" href="image_29665.png" type="image/png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-image {
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #00CFFF;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #00CFFF;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: ('image_1150.jpeg') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Media Gallery Styles */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .media-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .media-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .media-container img,
+        .media-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .media-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .play-button, .rewind-button, .forward-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .play-button:hover, .rewind-button:hover, .forward-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 20px solid #764ba2;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .rewind-icon {
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-right: 20px solid #764ba2;
+            position: relative;
+            margin-right: 5px;
+        }
+
+        .rewind-icon::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: -12px;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-right: 20px solid #764ba2;
+        }
+
+        .forward-icon {
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 20px solid #764ba2;
+            position: relative;
+            margin-left: 5px;
+        }
+
+        .forward-icon::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: -12px;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 20px solid #764ba2;
+        }
+
+        .media-info {
+            padding: 20px;
+        }
+
+        .media-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .media-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .media-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .media-type {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Seek bar styles */
+        .seek-bar-container {
+            padding: 10px 20px;
+            background: #f9f9f9;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .seek-bar {
+            width: 100%;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .seek-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .seek-bar::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Time display styles */
+        .video-time-display {
+            padding: 10px 20px;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        .current-time {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .total-time {
+            color: #888;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow: auto;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 0;
+            width: 90%;
+            max-width: 1200px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .modal-content img, .modal-content video {
+            width: 100%;
+            display: block;
+        }
+
+        .modal-caption {
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #00CFFF;
+        }
+
+        /* Professional Footer Styles */
+        footer {
+            background-color: #1f2937;
+            color: white;
+            padding: 60px 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #00CFFF 100%);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section {
+            width: 100%;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #00CFFF;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #00CFFF;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo .logo-icon {
+            font-size: 28px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .footer-logo .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .footer-description {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #00CFFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-links a::before {
+            content: '→';
+            position: absolute;
+            left: -15px;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00CFFF;
+            padding-left: 15px;
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-info i {
+            color: #00CFFF;
+            margin-right: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+
+        .contact-info span {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+            min-width: 200px;
+        }
+
+        .newsletter-input::placeholder {
+            color: #aaa;
+        }
+
+        .newsletter-button {
+            padding: 12px 20px;
+            background: #00CFFF;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .newsletter-button:hover {
+            background: #00a8cc;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .copyright {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #00CFFF;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .media-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                gap: 10px;
+            }
+            
+            .play-button, .rewind-button, .forward-button {
+                width: 50px;
+                height: 50px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .footer-bottom-links {
+                justify-content: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="image_29665.png" alt="Irodx Logo" class="logo-image">
+            <a href="index.html" class="logo">
+               <div class="logo-text"><span style="color: #000000;">Iro</span><span style="color: #00CFFF;">dx</span></div>
+            </a>
+        </div>
+        <div class="hamburger" aria-label="Toggle Menu">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="support.html">Support</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Gallery</h1>
+                <p>Innovation that empowers and drives you forward.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Media Gallery Section -->
+    <div class="container">
+        <div class="media-grid">
+            <!-- Image Card 1 -->
+            <div class="media-card">
+                <div class="media-container" data-type="image" data-src="11.png" data-title="Product Showcase">
+                    <img src="11.png" alt="Product Showcase">
+                </div>
+                <div class="media-info">
+                    <h3 class="media-title">Product Showcase</h3>
+                    <p class="media-description"></p>
+                    <div class="media-meta">
+                        <span class="media-type">Image</span>
+                        <span>March 00, 0000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 1 -->
+            <div class="media-card">
+                <div class="media-container" data-type="video" data-src="202511051327.mp4" data-title="KiPi-re Gameplay Preview">
+                    <video poster="2025801_165515561.png">
+                        <source src="202511051327.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay">
+                        <div class="controls">
+                            <div class="rewind-button">
+                                <div class="rewind-icon"></div>
+                            </div>
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                            <div class="forward-button">
+                                <div class="forward-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seek-bar-container">
+                    <input type="range" class="seek-bar" min="0" max="100" value="0">
+                </div>
+                <div class="video-time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="total-time">0:00</span>
+                </div>
+                <div class="media-info">
+                    <h3 class="media-title">KiPi-re Gameplay Preview</h3>
+                    <p class="media-description">An adrenaline-pumping endless runner featuring dynamic obstacles, exciting power-ups, and immersive gameplay.</p>
+                    <div class="media-meta">
+                        <span class="media-type">Video</span>
+                        <span>AUG 11, 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 2 -->
+            <div class="media-card">
+                <div class="media-container" data-type="video" data-src="9876543_9876543.mp4" data-title="Luck_flip">
+                    <video poster="9876543_9876543.png">
+                        <source src="9876543_9876543.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay">
+                        <div class="controls">
+                            <div class="rewind-button">
+                                <div class="rewind-icon"></div>
+                            </div>
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                            <div class="forward-button">
+                                <div class="forward-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seek-bar-container">
+                    <input type="range" class="seek-bar" min="0" max="100" value="0">
+                </div>
+                <div class="video-time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="total-time">0:00</span>
+                </div>
+                <div class="media-info">
+                    <h3 class="media-title">Coin-Toss</h3>
+                    <p class="media-description">Simple yet addictive coin flipping game with statistics and prediction features.</p>
+                    <div class="media-meta">
+                        <span class="media-type">Video</span>
+                        <span>NOV 10, 2025</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Card 3 -->
+            <div class="media-card">
+                <div class="media-container" data-type="video" data-src="456765432123456.mp4" data-title="Team Introduction">
+                    <video poster="456765432123456.png">
+                        <source src="456765432123456.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay">
+                        <div class="controls">
+                            <div class="rewind-button">
+                                <div class="rewind-icon"></div>
+                            </div>
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                            <div class="forward-button">
+                                <div class="forward-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seek-bar-container">
+                    <input type="range" class="seek-bar" min="0" max="100" value="0">
+                </div>
+                <div class="video-time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="total-time">0:00</span>
+                </div>
+                <div class="media-info">
+                    <h3 class="media-title">Catch the Stars</h3>
+                    <p class="media-description">Catch the Stars is a fun and addictive mobile game where you drag your finger to move a basket, catch falling stars for points, and avoid bombs to keep your three lives!</p>
+                    <div class="media-meta">
+                        <span class="media-type">Video</span>
+                        <span>NOV 09, 2025</span>
+                    </div>
+                </div>
+            </div>
+        
+
+
+
+
+
+
+
+             <!-- Video Card 4 -->
+            <div class="media-card">
+                <div class="media-container" data-type="video" data-src="9876543_9876543.mp4" data-title="Luck_flip">
+                    <video poster="20250801_165515561.png">
+                        <source src="20250801_165515561.mp4" type="video/mp4">
+                    </video>
+                    <div class="play-overlay">
+                        <div class="controls">
+                            <div class="rewind-button">
+                                <div class="rewind-icon"></div>
+                            </div>
+                            <div class="play-button">
+                                <div class="play-icon"></div>
+                            </div>
+                            <div class="forward-button">
+                                <div class="forward-icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="seek-bar-container">
+                    <input type="range" class="seek-bar" min="0" max="100" value="0">
+                </div>
+                <div class="video-time-display">
+                    <span class="current-time">0:00</span>
+                    <span class="total-time">0:00</span>
+                </div>
+                <div class="media-info">
+                    <h3 class="media-title"></h3>
+                    <p class="media-description"></p>
+                    <div class="media-meta">
+                        <span class="media-type">Video</span>
+                        <span>... 00, 0000</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal">
+        <div class="modal-content">
+            <img id="modal-image" style="display: none;" />
+            <video id="modal-video" controls style="display: none;"></video>
+            <div class="modal-caption" id="modal-caption"></div>
+            <div class="modal-close"><i class="fas fa-times"></i></div>
+        </div>
+    </div>
+
+    <!--Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <div class="footer-logo">
+                       <div class="logo-text">
+                               <span style="color: #ffffff;">Iro</span><span style="color: #00CFFF;">dx</span>
+                       </div>
+                    </div>
+                    <p class="footer-description">
+                        Innovation that empowers and drives you forward.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/irodxPlatforms" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links Section -->
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="support.html">Support</a></li>
+                        <li><a href="report.html">Report</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Newsletter Section -->
+                <div class="footer-section">
+                    <h3>Mail</h3>
+                    <ul class="contact-info">
+                        <li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>hello@aitinc.site</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2025 <span style="color: #ffffff;">Iro</span><span style="color: #00CFFF;">dx</span>. All rights reserved.
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="Privacy-Policy.html">Privacy Policy</a>
+                    <a href="Terms-of-Service.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Newsletter form handler
+        function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('.newsletter-input').value;
+            
+            // Create success message
+            const successMessage = document.createElement('div');
+            successMessage.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: #4CAF50;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            successMessage.textContent = `Successfully subscribed with ${email}`;
+            document.body.appendChild(successMessage);
+            
+            // Clear form
+            event.target.reset();
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                successMessage.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(successMessage);
+                }, 300);
+            }, 3000);
+        }
+
+        // Add slide animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Format time function (convert seconds to MM:SS format)
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }
+
+        // Modal functionality
+        const modal = document.querySelector('.modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalVideo = document.getElementById('modal-video');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalClose = document.querySelector('.modal-close');
+
+        // Open modal when clicking on media container
+        document.querySelectorAll('.media-container').forEach(container => {
+            container.addEventListener('click', function(e) {
+                // Don't open modal if clicking on controls
+                if (e.target.closest('.controls') || e.target.closest('.seek-bar-container')) {
+                    return;
+                }
+                
+                const type = this.dataset.type;
+                const src = this.dataset.src;
+                const title = this.dataset.title;
+                
+                if (type === 'image') {
+                    modalImage.src = src;
+                    modalImage.style.display = 'block';
+                    modalVideo.style.display = 'none';
+                } else if (type === 'video') {
+                    modalVideo.src = src;
+                    modalVideo.style.display = 'block';
+                    modalImage.style.display = 'none';
+                }
+                
+                modalCaption.textContent = title;
+                modal.style.display = 'block';
+            });
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+            modalVideo.pause();
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                modalVideo.pause();
+            }
+        });
+
+        // Video play functionality
+        document.querySelectorAll('.play-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoCard = this.closest('.media-card');
+                const video = videoCard.querySelector('video');
+                const playIcon = this.querySelector('.play-icon');
+                const mediaContainer = video.closest('.media-container');
+                
+                if (video.paused) {
+                    video.play();
+                    playIcon.style.borderLeft = '0';
+                    playIcon.style.borderRight = '20px solid #764ba2';
+                    playIcon.style.marginLeft = '0';
+                    mediaContainer.classList.add('playing');
+                } else {
+                    video.pause();
+                    playIcon.style.borderLeft = '20px solid #764ba2';
+                    playIcon.style.borderRight = '0';
+                    playIcon.style.marginLeft = '5px';
+                    mediaContainer.classList.remove('playing');
+                }
+            });
+        });
+
+        // Video rewind functionality
+        document.querySelectorAll('.rewind-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoCard = this.closest('.media-card');
+                const video = videoCard.querySelector('video');
+                
+                // Rewind by 10 seconds
+                video.currentTime = Math.max(0, video.currentTime - 10);
+                
+                // Visual feedback
+                const rewindIcon = this.querySelector('.rewind-icon');
+                rewindIcon.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    rewindIcon.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Video forward functionality
+        document.querySelectorAll('.forward-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoCard = this.closest('.media-card');
+                const video = videoCard.querySelector('video');
+                
+                // Forward by 10 seconds
+                video.currentTime = Math.min(video.duration, video.currentTime + 10);
+                
+                // Visual feedback
+                const forwardIcon = this.querySelector('.forward-icon');
+                forwardIcon.style.transform = 'scale(0.8)';
+                setTimeout(() => {
+                    forwardIcon.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Seek bar and time display functionality
+        document.querySelectorAll('.media-card video').forEach(video => {
+            const videoCard = video.closest('.media-card');
+            const seekBar = videoCard.querySelector('.seek-bar');
+            const currentTimeDisplay = videoCard.querySelector('.current-time');
+            const totalTimeDisplay = videoCard.querySelector('.total-time');
+            
+            // Update total time when metadata is loaded
+            video.addEventListener('loadedmetadata', function() {
+                totalTimeDisplay.textContent = formatTime(video.duration);
+            });
+            
+            // Update seek bar and current time as video plays
+            video.addEventListener('timeupdate', function() {
+                if (video.duration) {
+                    const percentage = (video.currentTime / video.duration) * 100;
+                    seekBar.value = percentage;
+                    currentTimeDisplay.textContent = formatTime(video.currentTime);
+                }
+            });
+            
+            // Seek when the user drags the seek bar
+            seekBar.addEventListener('input', function(e) {
+                e.stopPropagation();
+                const time = (seekBar.value / 100) * video.duration;
+                video.currentTime = time;
+            });
+            
+            // Add event listeners for play, pause, ended to toggle 'playing' class
+            video.addEventListener('play', function() {
+                video.closest('.media-container').classList.add('playing');
+            });
+            
+            video.addEventListener('pause', function() {
+                video.closest('.media-container').classList.remove('playing');
+            });
+            
+            video.addEventListener('ended', function() {
+                video.closest('.media-container').classList.remove('playing');
+                // Reset play button icon
+                const playButton = videoCard.querySelector('.play-button');
+                const playIcon = playButton.querySelector('.play-icon');
+                playIcon.style.borderLeft = '20px solid #764ba2';
+                playIcon.style.borderRight = '0';
+                playIcon.style.marginLeft = '5px';
+            });
+        });
+    </script>
+</body>
+</html>

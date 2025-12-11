@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="A showcase animated graphics website with hero, SVG drawing, 3D background, portfolio, contact form and more."/>
+  <meta name="author" content="Your Name"/>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <title>Animated Graphics Showcase</title>
+  <style>
+    :root {
+      --primary: #00aaff;
+      --secondary: #ff4081;
+      --dark: #111;
+      --light: #f5f5f5;
+      --font: 'Arial', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font);
+      color: #333;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background: var(--light);
+    }
+    img, svg { display: block; max-width: 100%; }
+
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--dark); display: flex;
+      align-items: center; justify-content: center; z-index: 9999;
+    }
+    #preloader .spinner {
+      width: 50px; height: 50px;
+      border: 5px solid var(--light);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #cursor {
+      position: fixed; top: 0; left: 0;
+      width: 20px; height: 20px; pointer-events: none;
+      border: 2px solid var(--primary); border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: background .2s, transform .1s;
+      z-index: 10000;
+    }
+
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 4px; background: var(--primary);
+      width: 0; z-index: 9998;
+    }
+
+    nav {
+      position: fixed;
+      top: -80px;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: top 0.5s ease;
+    }
+    nav.show {
+      top: 0;
+    }
+    nav .logo {
+      font-weight: bold;
+      color: var(--dark);
+      font-size: 1.5rem;
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInDown 1s forwards;
+    }
+    @keyframes fadeInDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero {
+      position: relative; height: 100vh; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--dark); color: #fff;
+      text-align: center; padding: 0 1rem;
+    }
+    .hero h1 {
+      font-size: 3rem; margin-bottom: 1rem; opacity: 0;
+    }
+    .typewriter {
+      display: inline-block; border-right: 2px solid #fff;
+      white-space: nowrap; overflow: hidden; font-size: 1.25rem;
+      opacity: .8; margin-top: .5rem;
+    }
+    .hero canvas {
+      position: absolute; top: 0; left: 0; z-index: 1;
+      width: 100vw; height: 100vh; pointer-events: none;
+    }
+
+    section { padding: 4rem 2rem; }
+    .about, .services, .portfolio, .testimonials, .contact {
+      max-width: 1000px; margin: 0 auto;
+    }
+    .about h2, .services h2, .portfolio h2,
+    .testimonials h2, .contact h2 {
+      text-align: center; margin-bottom: 2rem; color: var(--dark);
+    }
+
+    .services .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .services .card {
+      background: #fff; padding: 2rem; border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); text-align: center;
+      opacity: 0; transform: translateY(50px);
+    }
+    .services .card svg {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      color: var(--primary);
+      stroke-width: 1.5;
+    }
+
+    footer {
+      background: var(--dark); color: #fff; text-align: center;
+      padding: 2rem; font-size: .9rem;
+    }
+
+    #backTop {
+      position: fixed; bottom: 1rem; right: 1rem;
+      background: var(--primary); color: #fff;
+      padding: .75rem 1rem; border-radius: 4px; cursor: pointer;
+      display: none; z-index: 1000; font-size: 0.9rem;
+    }
+
+    .animated-btn {
+      position: relative;
+      padding: 15px 40px;
+      background: #111;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 1;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .animated-btn::before,
+    .animated-btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border-radius: 50px;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    .animated-btn::before {
+      background: radial-gradient(circle at center, rgba(0, 255, 200, 0.5), transparent 70%);
+      animation: pulseGlow 2s infinite ease-in-out;
+    }
+    .animated-btn::after {
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-100%) rotate(25deg);
+      animation: sweep 2s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(0.9); opacity: 0.6; }
+      50%      { transform: scale(1.1); opacity: 1; }
+    }
+    @keyframes sweep {
+      0%   { transform: translateX(-100%) rotate(25deg); }
+      100% { transform: translateX(100%)  rotate(25deg); }
+    }
+    .animated-btn:hover {
+      color: #00ffc8;
+      transform: scale(1.05);
+    }
+    .animated-btn:hover::before { animation-duration: 1.5s; }
+    .animated-btn:hover::after  { animation-duration: 1s; opacity: 0.8; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .typewriter { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="preloader"><div class="spinner"></div></div>
+  <div id="cursor"></div>
+  <div id="progress-bar"></div>
+
+  <nav id="mainNav">
+    <div class="logo"><i>TOHA</i></div>
+    <div class="menu-toggle">&#9776;</div>
+  </nav>
+
+  <header id="hero" class="hero">
+    <h1>TOHA</h1>
+    <div class="typewriter" data-text="Hello! I'm Abrar Ishraq Toha from Rajshahi, Bangladesh...................."></div>
+    <canvas id="three-bg"></canvas>
+  </header>
+
+  <section class="services" id="services">
+    <div class="card">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path d="M12 4v16m8-8H4"/>
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+      <a href="grafix478765.html" class="animated-btn">Click</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 TOHA. All rights reserved.</p>
+  </footer>
+
+  <div id="backTop">Top ↑</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.6/vivus.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+  <script>
+    window.addEventListener('load', () => {
+      gsap.to('#preloader', { opacity:0, duration:0.6, onComplete: ()=> document.getElementById('preloader').remove() });
+
+      const cursor = document.getElementById('cursor');
+      document.addEventListener('mousemove', e => {
+        cursor.style.transform = `translate(${e.clientX}px,${e.clientY}px)`;
+      });
+
+      const progBar = document.getElementById('progress-bar');
+      window.addEventListener('scroll', () => {
+        const pct = window.scrollY / (document.body.scrollHeight - innerHeight) * 100;
+        progBar.style.width = pct + '%';
+      });
+
+      const tw = document.querySelector('.typewriter');
+      const text = tw.dataset.text; let idx=0;
+      const type = ()=> {
+        if(idx < text.length) {
+          tw.textContent += text[idx++];
+          setTimeout(type, 100);
+        } else { tw.style.borderColor = 'transparent'; }
+      };
+      type();
+
+      gsap.from('.hero h1', { y:50, opacity:0, duration:1.2, ease:'power3.out' });
+
+      gsap.registerPlugin(ScrollTrigger);
+      document.querySelectorAll('.services .card').forEach(el => {
+        gsap.to(el, {
+          y:0, opacity:1, duration:0.8, ease:'power2.out',
+          scrollTrigger: { trigger:el, start:'top 85%' }
+        });
+      });
+
+      const backTop = document.getElementById('backTop');
+      window.addEventListener('scroll', ()=> backTop.style.display = window.scrollY>500 ? 'block':'none' );
+      backTop.addEventListener('click', ()=> gsap.to(window, { scrollTo:0, duration:0.8 }));
+
+      const canvas = document.getElementById('three-bg');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha:true });
+      renderer.setSize(innerWidth, innerHeight);
+      const geo = new THREE.IcosahedronGeometry(6,1);
+      const mat = new THREE.MeshBasicMaterial({ color:0x00aaff, wireframe:true });
+      const mesh = new THREE.Mesh(geo, mat);
+      scene.add(mesh); camera.position.z=15;
+      function render3D(){
+        mesh.rotation.x += 0.003;
+        mesh.rotation.y += 0.005;
+        renderer.render(scene, camera);
+        requestAnimationFrame(render3D);
+      }
+      render3D();
+
+      window.addEventListener('resize', ()=> {
+        camera.aspect = innerWidth/innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+
+      // Animate nav on scroll
+      const nav = document.getElementById('mainNav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+          nav.classList.add('show');
+        } else {
+          nav.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
